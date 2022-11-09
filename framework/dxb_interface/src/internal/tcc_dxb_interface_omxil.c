@@ -901,6 +901,7 @@ Omx_Dxb_Dec_App_Private_Type* tcc_omx_init(void *pvParent)
     OMX_Dxb_Dec_AppPriv->current_time =0;
 	OMX_Dxb_Dec_AppPriv->iContentsType = 0; // 0:Main contents, 1:Sub contents(DAB)
 	OMX_Dxb_Dec_AppPriv->pvParent = pvParent;
+	OMX_Dxb_Dec_AppPriv->iDxBStandard = 0;
 
 #ifdef      ENABLE_REMOTE_PLAYER
 {

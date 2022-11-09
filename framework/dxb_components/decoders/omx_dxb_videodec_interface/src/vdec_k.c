@@ -256,6 +256,7 @@ static const char *strLevel[VCODEC_MAX][LEVEL_MAX] =
 static void dxb_vpu_env_close(int handle, _vdec_ * pVdec);
 
 #if defined(HAVE_LINUX_PLATFORM)
+#if 0 //jayden
 static void *vdec_malloc(unsigned int size)
 {
 	void * ptr = TCC_fo_malloc(__func__, __LINE__,size);
@@ -266,6 +267,7 @@ static void vdec_free(void * ptr )
 {
 	TCC_fo_free (__func__, __LINE__,ptr);
 }
+#endif
 
 static void *__cdk_sys_malloc_physical_addr(unsigned int *remap_addr, int uiSize, Buffer_Type type, _vdec_ *pVdec)
 {

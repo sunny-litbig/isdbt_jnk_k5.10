@@ -54,6 +54,7 @@ extern "C" {
 void tcc_mw_memoryleakcheck_init(void);
 void tcc_mw_memoryleakcheck_term(void);
 void* tcc_mw_malloc(const char* functionName, unsigned int line, unsigned int size);
+void* tcc_mw_calloc(const char* functionName, unsigned int line, unsigned int isize_t, unsigned int size);
 void tcc_mw_free(const char* functionName, unsigned int line, void* ptr);
 
 

@@ -193,7 +193,12 @@ unsigned int TCCDxBEvent_Emergency_Info_Update(void *arg)
 	ST_DXBPROC_EVENT *pEvent;
 	DEBUG_MSG("%s::%d::[0x%p]",__func__, __LINE__, (int *)arg);
 	pEvent = (ST_DXBPROC_EVENT*)tcc_mw_malloc(__FUNCTION__, __LINE__, sizeof(ST_DXBPROC_EVENT));
+#if 0
 	pData = (int*)tcc_mw_malloc(__FUNCTION__, __LINE__, sizeof(int) * (256+5));
+#else
+	pData = (int*)tcc_mw_calloc(__FUNCTION__, __LINE__, 1, sizeof(int) * (256+5));
+#endif
+
 	int *pAreaCode, area_code_length, i;
 
 	pArg = (int*)arg;
@@ -229,7 +234,12 @@ unsigned int TCCDxBEvent_SubtitleUpdateLinux(void *arg)
 	int *pData, *pArg, *phy_addr;
 	ST_DXBPROC_EVENT *pEvent;
 	pEvent = (ST_DXBPROC_EVENT*)tcc_mw_malloc(__FUNCTION__, __LINE__, sizeof(ST_DXBPROC_EVENT));
+#if 0
 	pData = (int*)tcc_mw_malloc(__FUNCTION__, __LINE__, sizeof(int) * 3);
+#else
+	pData = (int*)tcc_mw_calloc(__FUNCTION__, __LINE__, 1, sizeof(int) * 3);
+#endif
+
 	pArg = (int*)arg;
 	pData[0] = (int)pArg[0]; //internal_sound_index
 	phy_addr = (int*)pArg[1]; //mixed subtitle for phy addr

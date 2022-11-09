@@ -58,11 +58,14 @@ DxB_ERR_CODE TCC_DxB_VIDEO_Init(DxBInterface *hInterface)
 	if(pPrivate == NULL){
 		return DxB_ERR_ERROR;
 	}
-
-	pPrivate->uiDisplayEnableFlag = 0;
-	pPrivate->pfnEventCallback = NULL;
-
-	hInterface->pVideoPrivate = pPrivate;
+	else
+	{
+		// initialize TCC_DxB_VIDEO_PRIVATE structure
+		pPrivate->uiDisplayEnableFlag = 0;
+		pPrivate->pfnEventCallback = NULL;
+		pPrivate->pUserData = NULL;
+		hInterface->pVideoPrivate = pPrivate;
+	}
 
 	return DxB_ERR_OK;
 }

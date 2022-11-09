@@ -146,7 +146,11 @@ int tcc_dxb_demux_do_change_state(TCC_DxB_DEMUX_PRIVATE *pPrivate, Omx_Dxb_Dec_A
 
 DxB_ERR_CODE TCC_DxB_DEMUX_Init(DxBInterface *hInterface, DxB_STANDARDS Standard, UINT32 ulDevId, UINT32 ulBaseBandType)
 {
+#if 0
 	TCC_DxB_DEMUX_PRIVATE *pPrivate = TCC_fo_malloc(__func__, __LINE__,sizeof(TCC_DxB_DEMUX_PRIVATE));
+#else
+	TCC_DxB_DEMUX_PRIVATE *pPrivate = TCC_fo_calloc(__func__, __LINE__, 1, sizeof(TCC_DxB_DEMUX_PRIVATE));
+#endif
 	Omx_Dxb_Dec_App_Private_Type *OMX_Dxb_Dec_AppPriv;
 	INT32 ierr = 0;
 	void *pfnGetSTC = NULL, *pfnPCRCallback, *pfnTSCallback;

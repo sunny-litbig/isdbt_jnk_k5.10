@@ -1494,10 +1494,14 @@ static ltv_dmx_t* linuxtv_dmx_init(int iDevIdx, int iFlags)
 		return pLtvDemux;
 	}
 
+	// initialize ltv_dmx_t structure
 	memset(pLtvDemux->tDemuxFilterList, 0x0, sizeof(ltv_dmx_filter_t) * MAX_FILTER_NUM);
 	memset(pLtvDemux->tDemuxThreadList, 0x0, sizeof(ltv_dmx_thread_t) * MAX_THREAD_NUM);
 
 	pLtvDemux->iDevIdx = iDevIdx;
+
+	pLtvDemux->iDummyFilter = -1;
+	pLtvDemux->iDvrInput = 0;
 
 	StartDummyDemux(pLtvDemux);
 

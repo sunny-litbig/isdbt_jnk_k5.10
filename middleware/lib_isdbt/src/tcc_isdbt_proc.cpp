@@ -2430,7 +2430,12 @@ int TCCDxBProc_SetHandover(int country_code)
 	tcc_dxb_proc_state_change_to_load(0);
 
 	pProcMsg = (ST_DXBPROC_MSG*)tcc_mw_malloc(__FUNCTION__, __LINE__, sizeof(ST_DXBPROC_MSG));
+#if 0
 	puiArg = (unsigned int*)tcc_mw_malloc(__FUNCTION__, __LINE__, sizeof(unsigned int) * 2);
+#else
+	puiArg = (unsigned int*)tcc_mw_calloc(__FUNCTION__, __LINE__, 1, sizeof(unsigned int) * 2);
+#endif
+
 	puiArg[0] = (unsigned int)country_code;
 
 	pProcMsg->cmd = DXBPROC_MSG_HANDOVER;

@@ -205,7 +205,12 @@ TCCAlsa::TCCAlsa()
 	mOut->fullthreshold = 0;
 	mOut->output_delay_ms = 0;
 
+#if 0
 	mOut->playback_status = (snd_pcm_status_t *)TCC_fo_malloc(__func__, __LINE__,snd_pcm_status_sizeof());
+#else
+	mOut->playback_status = (snd_pcm_status_t *)TCC_fo_calloc(__func__, __LINE__, 1, snd_pcm_status_sizeof());
+#endif
+
 	mOut->alsa_reopen_request = 1;
 
 	#if 0

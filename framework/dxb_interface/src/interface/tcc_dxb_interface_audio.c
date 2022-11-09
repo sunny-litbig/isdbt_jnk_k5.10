@@ -58,10 +58,13 @@ DxB_ERR_CODE TCC_DxB_AUDIO_Init(DxBInterface *hInterface)
 	if(pPrivate == NULL){
 		return DxB_ERR_NO_ALLOC;
 	}
-
-	pPrivate->pfnEventCallback = NULL;
-
-	hInterface->pAudioPrivate = pPrivate;
+	else
+	{
+		// initialize TCC_DxB_AUDIO_PRIVATE structure
+		pPrivate->pfnEventCallback = NULL;
+		pPrivate->pUserData = NULL;
+		hInterface->pAudioPrivate = pPrivate;
+	}
 
 	return DxB_ERR_OK;
 }

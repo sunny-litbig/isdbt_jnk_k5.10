@@ -1227,7 +1227,11 @@ int tcc_demux_load_pmts(void)
 
 	if( iPMT > 0 )
 	{
+#if 0
 		pPMT_PID = (unsigned short *)tcc_mw_malloc(__FUNCTION__, __LINE__, sizeof(short) * iPMT);
+#else
+		pPMT_PID = (unsigned short *)tcc_mw_calloc(__FUNCTION__, __LINE__, 1, sizeof(short) * iPMT);
+#endif
 
 		GetPMT_PID_ChannelTable(pPMT_PID, iPMT);
 		pTMP_PID = pPMT_PID;
@@ -1287,12 +1291,20 @@ int tcc_demux_load_pmts_backscan(void)
 			iPMT = MAX_SUPPORT_PLAYBACKSCAN_PMTS;
 		}
 
+#if 0
 		pPMT_PID = (unsigned short *)tcc_mw_malloc(__FUNCTION__, __LINE__, sizeof(short) * iPMT);
+#else
+		pPMT_PID = (unsigned short *)tcc_mw_calloc(__FUNCTION__, __LINE__, 1, sizeof(short) * iPMT);
+#endif
 		// jini 9th
 		if (pPMT_PID == NULL)
 			return ret;
 
+#if 0
 		pSERVICE_ID	= (unsigned short *)tcc_mw_malloc(__FUNCTION__, __LINE__, sizeof(short) * iPMT);
+#else
+		pSERVICE_ID	= (unsigned short *)tcc_mw_calloc(__FUNCTION__, __LINE__, 1, sizeof(short) * iPMT);
+#endif
 		// jini 9th
 		if (pSERVICE_ID == NULL)
 		{
@@ -3503,7 +3515,12 @@ DxB_ERR_CODE tcc_demux_section_notify(UINT8 *pucBuf,  UINT32 ulBufSize, UINT32 u
 		return DxB_ERR_OK;
 	}
 
+#if 0
 	pSectionCmd = tcc_mw_malloc(__FUNCTION__, __LINE__, sizeof(DEMUX_DEC_COMMAND_TYPE));
+#else
+	pSectionCmd = tcc_mw_calloc(__FUNCTION__, __LINE__, 1, sizeof(DEMUX_DEC_COMMAND_TYPE));
+#endif
+
 	if(pSectionCmd == NULL){
 		ALOGE("[%s] DEMUX_DEC_COMMAND_TYPE allocation fail\n", __func__);
 		return DxB_ERR_NO_ALLOC;
@@ -3570,7 +3587,12 @@ int tcc_demux_send_dec_ctrl_cmd(tcc_dxb_queue_t* pDecoderQueue, E_DECTHREAD_CTRL
 	tcc_dxb_sem_t *pCmdSync = NULL;
 	int err;
 
+#if 0
 	pDecCmd = tcc_mw_malloc(__FUNCTION__, __LINE__, sizeof(DEMUX_DEC_COMMAND_TYPE));
+#else
+	pDecCmd = tcc_mw_calloc(__FUNCTION__, __LINE__, 1, sizeof(DEMUX_DEC_COMMAND_TYPE));
+#endif
+
 	if( pDecCmd )
 	{
 		pDecCmd->eCommandType = DEC_CMDTYPE_CONTROL;
@@ -3866,7 +3888,11 @@ int tcc_demux_delete_all_fullseg_pmts_remained(void)
 
 	if( iPMT > 0 )
 	{
+#if 0
 		pPMT_PID = (unsigned short *)tcc_mw_malloc(__FUNCTION__, __LINE__, sizeof(short) * iPMT);
+#else
+		pPMT_PID = (unsigned short *)tcc_mw_calloc(__FUNCTION__, __LINE__, 1, sizeof(short) * iPMT);
+#endif
 
 		GetPMT_PID_ChannelTable(pPMT_PID, iPMT);
 		pTMP_PID = pPMT_PID;
@@ -3919,7 +3945,11 @@ int tcc_demux_is_fullseg_pmts_remained(void)
 
 	if( iPMT > 0 )
 	{
+#if 0
 		pPMT_PID = (unsigned short *)tcc_mw_malloc(__FUNCTION__, __LINE__, sizeof(short) * iPMT);
+#else
+		pPMT_PID = (unsigned short *)tcc_mw_calloc(__FUNCTION__, __LINE__, 1, sizeof(short) * iPMT);
+#endif
 
 		GetPMT_PID_ChannelTable(pPMT_PID, iPMT);
 		pTMP_PID = pPMT_PID;

@@ -181,6 +181,7 @@ static void sPhysicalMemFree(unsigned int LogicalAddr, unsigned int size)
 	}
 }
 
+#if 0
 static void *vdec_malloc(unsigned int size)
 {
 	void * ptr = TCC_fo_malloc(__func__, __LINE__,size);
@@ -191,6 +192,7 @@ static void vdec_free(void * ptr )
 {
 	TCC_fo_free (__func__, __LINE__,ptr);
 }
+#endif
 
 static void *cdk_sys_malloc_physical_addr_jpu(int uiSize)
 {

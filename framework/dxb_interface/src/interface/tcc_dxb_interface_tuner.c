@@ -80,6 +80,10 @@ DxB_ERR_CODE TCC_DxB_TUNER_Init(DxBInterface *hInterface, UINT32 ulStandard, UIN
 
 	hInterface->iTunerType    = ulTunerType;
 	hInterface->pTunerPrivate = pPrivate;
+	
+	// initialize TCC_DxB_TUNER_PRIVATE structure
+	pPrivate->pfnEventCallback = NULL;
+	pPrivate->pUserData = NULL;
 
 	pPrivate->uiTunerErrorIndicator[0] = 0;
 	pPrivate->uiTunerErrorIndicator[1] = 0;

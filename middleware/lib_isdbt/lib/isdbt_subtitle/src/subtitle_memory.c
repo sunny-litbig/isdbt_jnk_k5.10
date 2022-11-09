@@ -68,6 +68,7 @@ static SUB_MEM_MGR_TYPE* subtitle_memory_getctx(void)
 	return &g_mem_mgr_type;
 }
 
+#if defined(HAVE_ANDROID_OS)
 int subtitle_memory_create(int width, int height)
 {
 	SUB_MEM_MGR_TYPE *pMem;
@@ -113,6 +114,7 @@ int subtitle_memory_create(int width, int height)
 
 	return max_queue_num;
 }
+#endif
 
 int subtitle_memory_linux_create(int width, int height)
 {

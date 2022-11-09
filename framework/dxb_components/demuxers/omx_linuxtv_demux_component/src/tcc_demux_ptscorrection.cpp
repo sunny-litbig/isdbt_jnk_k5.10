@@ -68,8 +68,8 @@ HandleDemuxMsg TCCDEMUXMsg_Init(void)
 		return (HandleDemuxMsg) pDemuxMessage;
 	}
 
-	memset(pDemuxMessage->g_stAdjustVideoPTSInfo, 0x0, sizeof(TCC_PTS_ADJUSTVIDEOPTSINFO)*2);
-	memset(pDemuxMessage->g_stESBufferInfo, 0x0, sizeof(TCC_DEMUX_ESBUFFER)*2);
+	memset(pDemuxMessage->g_stAdjustVideoPTSInfo, 0x0, sizeof(TCC_PTS_ADJUSTVIDEOPTSINFO)*ES_VIDEO_MAX);
+	memset(pDemuxMessage->g_stESBufferInfo, 0x0, sizeof(TCC_DEMUX_ESBUFFER)*ES_VIDEO_MAX);
 	memset(pDemuxMessage->guVideoESBuffer, 0x0, SIZEOF_VIDEO_ES_BUFFER);
 
 	for(i=0; i<ES_VIDEO_MAX; i++)

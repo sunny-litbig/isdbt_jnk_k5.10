@@ -196,6 +196,87 @@ void* tcc_mw_malloc(const char* functionName, unsigned int line, unsigned int si
 	return ptr;
 }
 
+void* tcc_mw_calloc(const char* functionName, unsigned int line, unsigned int isize_t, unsigned int size)
+{
+	int i = 0;
+	void *ptr = NULL;
+
+#ifdef TCC_DXB_MEMORY_CORRUPTION_CHECK
+	ptr = malloc((isize_t * size) + 16);
+	memset(ptr, 0, (isize_t * size) + 16);
+		
+	unsigned char* tempPtr = (unsigned char*)ptr;
+	unsigned int temp = (isize_t * size);
+
+	tempPtr[0] = 49;
+	tempPtr[1] = 49;
+	tempPtr[2] = 49;
+	tempPtr[3] = 49;
+	tempPtr[4] = (unsigned char)((temp & 0xFF000000) >> 24);
+	tempPtr[5] = (unsigned char)((temp & 0x00FF0000) >> 16);
+	tempPtr[6] = (unsigned char)((temp & 0x0000FF00) >> 8);
+	tempPtr[7] = (unsigned char)((temp & 0x000000FF));
+			
+	tempPtr[8 + temp + 0] = tempPtr[0];
+	tempPtr[8 + temp + 1] = tempPtr[1];
+	tempPtr[8 + temp + 2] = tempPtr[2];
+	tempPtr[8 + temp + 3] = tempPtr[3];
+	tempPtr[8 + temp + 4] = tempPtr[4];
+	tempPtr[8 + temp + 5] = tempPtr[5];
+	tempPtr[8 + temp + 6] = tempPtr[6];
+	tempPtr[8 + temp + 7] = tempPtr[7];
+
+	ptr = ptr + 8;
+		
+	/*
+	printf("[%s] / %s, %d, %d / head %d, %d, %d, %d / tail %d, %d, %d, %d\n", 
+		__func__, functionName, line, size,
+		tempPtr[0], tempPtr[1], tempPtr[2], tempPtr[3],
+		tempPtr[size + 4 + 0], tempPtr[size + 4 + 1], tempPtr[size + 4 + 2], tempPtr[size + 4 + 3]);
+	*/
+#else
+	ptr = calloc(isize_t, size);
+#endif
+
+#ifdef TCC_MW_MEMORYLEAKCHECK
+	(void)pthread_mutex_lock(&g_TccMw_MemoryLeakCheck_Mutex);
+
+	for (i = 0; i < TCC_MW_MEMORYLEAKCHECK_STRUCT_MAX; i++)
+	{
+		if (g_TccMw_MemoryLeakCheck_Struct[i].usage == 0)
+		{
+			strncpy(g_TccMw_MemoryLeakCheck_Struct[i].functionName, functionName, TCC_MW_MEMORYLEAKCHECK_FILE_NAME_MAX);
+			g_TccMw_MemoryLeakCheck_Struct[i].functionName[TCC_MW_MEMORYLEAKCHECK_FILE_NAME_MAX - 1] = 0; /* null terminated */
+			g_TccMw_MemoryLeakCheck_Struct[i].line = line;
+			g_TccMw_MemoryLeakCheck_Struct[i].size = isize_t * size;
+			g_TccMw_MemoryLeakCheck_Struct[i].ptr = ptr;
+			g_TccMw_MemoryLeakCheck_Struct[i].usage = 1;
+
+			g_TccMw_MemoryLeakCheck_CurrentTotalMallocSize += (isize_t * size);
+			g_TccMw_MemoryLeakCheck_CurrentTotalMallocCount++;
+
+			if (g_TccMw_MemoryLeakCheck_HighestTotalMallocSize < g_TccMw_MemoryLeakCheck_CurrentTotalMallocSize)
+				g_TccMw_MemoryLeakCheck_HighestTotalMallocSize = g_TccMw_MemoryLeakCheck_CurrentTotalMallocSize;
+
+			if (g_TccMw_MemoryLeakCheck_HighestTotalMallocCount < g_TccMw_MemoryLeakCheck_CurrentTotalMallocCount)
+				g_TccMw_MemoryLeakCheck_HighestTotalMallocCount = g_TccMw_MemoryLeakCheck_CurrentTotalMallocCount;
+
+			if (g_TccMw_MemoryLeakCheck_HighestIndex < i)
+				g_TccMw_MemoryLeakCheck_HighestIndex = i;
+
+			break;
+		}
+	}
+
+	if (i == TCC_MW_MEMORYLEAKCHECK_STRUCT_MAX)
+		printf("[%s] calloc / Critical Error Happened / Please check this log !!!!!\n", __FUNCTION__);
+
+	pthread_mutex_unlock(&g_TccMw_MemoryLeakCheck_Mutex);
+#endif
+
+	return ptr;
+}
+
 void tcc_mw_free(const char* functionName, unsigned int line, void* ptr)
 {
 	int i = 0;
