@@ -2970,12 +2970,6 @@ void dxb_omx_videodec_component_BufferMgmtCallback (OMX_COMPONENTTYPE * openmaxS
 
 	omx_base_video_PortType *outPort;
 
-#if 1	// TEST_WITHOUT_VIDEO
-	pInputBuffer->nFilledLen = 0;
-	pOutputBuffer->nFilledLen = 0;
-	return;
-#endif
-
 //ALOGE("FILE_BUFFER_MODE");
 
 	if (omx_private->state != OMX_StateExecuting)

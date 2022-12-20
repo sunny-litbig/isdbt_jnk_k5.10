@@ -1366,6 +1366,7 @@ int TCC_DXB_ISDBTFSEG_PROCESS_Notifier(int msg, int ext1, int ext2, void *obj)
 			break;
 #else
 		case ISDBTPlayer::EVENT_SUBTITLE_UPDATE :
+			printf("<====== subtitle update (no dump)!!!======>\n");
 			SUBTITLE_DATA_t *subt;
 			subt = (SUBTITLE_DATA_t *)obj;
 			objsize = sizeof(SUBTITLE_DATA_t);
